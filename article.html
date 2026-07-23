@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" data-i18n-title="a.title">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure Virtual Machines — a beginner's guide · Alexandre Capita</title>
+<meta name="description" content="What Azure Virtual Machines are, how they're priced, and how to deploy your first VM — explained for beginners.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="article.css">
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="bg-fx" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+</div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#04122e" stroke-width="2"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16 9.2 3.5 3.5 0 0 1 17 18H7Z"/></svg></span>
+      <span class="name">Alexandre Capita<small>Azure · Cloud Notes</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#hub" data-i18n="nav.topics">Topics</a>
+      <a href="index.html#path" data-i18n="nav.path">Learning path</a>
+      <a href="index.html#about" data-i18n="nav.about">About</a>
+    </nav>
+    <a class="nav-cta" href="index.html#hub" data-i18n="nav.cta">Browse topics</a>
+  </div>
+</header>
+
+<!-- ARTICLE HERO -->
+<section class="article-hero">
+  <div class="wrap">
+    <div class="crumbs">
+      <a href="index.html" data-i18n="a.crumb_home">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <a href="index.html#hub" data-i18n="a.crumb_cat">Compute</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <span data-i18n="a.crumb_now">Virtual Machines</span>
+    </div>
+    <div class="article-badges">
+      <span class="tag cat" data-i18n="a.crumb_cat">Compute</span>
+      <span class="tag" data-i18n="a.badge_read">9 min read</span>
+      <span class="level beginner"><span class="bars"><i></i><i></i><i></i></span><span data-i18n="m.beginner">Beginner</span></span>
+    </div>
+    <h1 data-i18n="a.h1">Azure Virtual Machines, explained from scratch</h1>
+    <p class="standfirst" data-i18n="a.standfirst">A Virtual Machine is the most direct way to run your own server in the cloud. Here's what that really means, what it costs, and how to launch your first one in minutes.</p>
+    <div class="byline">
+      <div class="avatar">AC</div>
+      <div class="who"><b>Alexandre Capita</b><span data-i18n="a.updated">Updated June 2026 · Azure IaaS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<div class="wrap article-layout">
+  <!-- TOC -->
+  <aside class="toc">
+    <h6 data-i18n="a.toc_title">On this page</h6>
+    <ul>
+      <li><a href="#what" class="active" data-i18n="a.toc1">What is a VM?</a></li>
+      <li><a href="#anatomy" data-i18n="a.toc2">Anatomy of a VM</a></li>
+      <li><a href="#sizes" data-i18n="a.toc3">Sizes &amp; pricing</a></li>
+      <li><a href="#deploy" data-i18n="a.toc4">Deploy your first VM</a></li>
+      <li><a href="#tips" data-i18n="a.toc5">Beginner tips</a></li>
+    </ul>
+  </aside>
+
+  <!-- PROSE -->
+  <article class="prose">
+    <h2 id="what" data-i18n="a.h_what">What is a Virtual Machine?</h2>
+    <p data-i18n-html="a.p_what1">An Azure <strong>Virtual Machine (VM)</strong> is a computer that lives in Microsoft's datacenters instead of on your desk. You choose how much CPU, memory and disk it has, pick an operating system, and Azure gives you a fully working server you can log into within minutes — and shut down just as quickly.</p>
+    <p data-i18n-html="a.p_what2">This model is called <strong>Infrastructure as a Service (IaaS)</strong>: Microsoft manages the physical hardware, power, cooling and networking, while <em>you</em> manage the operating system and everything you install on top. It's the cloud building block that feels most like a traditional server, which makes it the perfect place to start.</p>
+
+    <div class="callout">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg></span>
+      <p data-i18n-html="a.callout1"><b>Analogy:</b> Renting a VM is like renting an apartment instead of buying a house. You get a space that's yours to use, you pay only while you live there, and the landlord (Azure) handles the building itself.</p>
+    </div>
+
+    <h2 id="anatomy" data-i18n="a.h_anatomy">The anatomy of a VM</h2>
+    <p data-i18n="a.p_anatomy">Every VM you create is actually a small bundle of resources working together. Understanding these pieces makes everything else in Azure click into place:</p>
+    <ul>
+      <li data-i18n-html="a.li1"><strong>Compute</strong> — the virtual CPU and RAM, defined by the VM <em>size</em>.</li>
+      <li data-i18n-html="a.li2"><strong>OS &amp; data disks</strong> — managed disks that store your operating system and files.</li>
+      <li data-i18n-html="a.li3"><strong>Network interface (NIC)</strong> — connects the VM to a <a href="index.html#hub" class="inline">Virtual Network</a>.</li>
+      <li data-i18n-html="a.li4"><strong>Public IP</strong> (optional) — makes the VM reachable from the internet.</li>
+      <li data-i18n-html="a.li5"><strong>Network Security Group</strong> — the firewall rules controlling who can connect.</li>
+    </ul>
+
+    <div class="imgph"><span data-i18n="a.imgph">// diagram placeholder — VM resource bundle (drop your screenshot here)</span></div>
+
+    <h2 id="sizes" data-i18n="a.h_sizes">Sizes &amp; pricing</h2>
+    <p data-i18n-html="a.p_sizes">VM <strong>sizes</strong> are grouped into families optimized for different jobs. You don't need to memorize them — just know the general shape:</p>
+    <table class="spec">
+      <thead><tr><th data-i18n="a.th1">Family</th><th data-i18n="a.th2">Best for</th><th data-i18n="a.th3">Example</th></tr></thead>
+      <tbody>
+        <tr><td>B-series</td><td data-i18n="a.td1">Burstable, low-cost dev/test</td><td>B2s</td></tr>
+        <tr><td>D-series</td><td data-i18n="a.td2">General-purpose production</td><td>D4s_v5</td></tr>
+        <tr><td>F-series</td><td data-i18n="a.td3">Compute-heavy workloads</td><td>F8s_v2</td></tr>
+        <tr><td>E-series</td><td data-i18n="a.td4">Memory-hungry apps</td><td>E16s_v5</td></tr>
+      </tbody>
+    </table>
+    <p data-i18n-html="a.p_billing">You're billed <strong>per second</strong> while a VM is running. The single biggest way to save money as a beginner: <strong>stop and deallocate</strong> VMs you aren't using — you stop paying for compute the moment you do.</p>
+
+    <div class="callout warn">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg></span>
+      <p data-i18n-html="a.callout_warn"><b>Watch out:</b> stopping a VM from <em>inside</em> the OS still bills you. Always “Stop (deallocate)” from the Azure Portal or CLI to actually release the hardware.</p>
+    </div>
+
+    <h2 id="deploy" data-i18n="a.h_deploy">Deploy your first VM</h2>
+    <p data-i18n-html="a.p_deploy">You can create a VM in the Portal with a few clicks, but the cleanest way to learn is the <strong>Azure CLI</strong> — one command captures every decision you just read about:</p>
+
+    <div class="code">
+      <div class="bar"><span class="lang">azure-cli · bash</span>
+        <button class="copy" data-copy><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy</button></div>
+      <pre><code><span class="c-com"># 1. Create a resource group to hold everything</span>
+<span class="c-cmd">az group create</span> <span class="c-flag">--name</span> rg-learn-azure <span class="c-flag">--location</span> westeurope
+
+<span class="c-com"># 2. Create a Linux VM inside it</span>
+<span class="c-cmd">az vm create</span> \
+  <span class="c-flag">--resource-group</span> rg-learn-azure \
+  <span class="c-flag">--name</span> my-first-vm \
+  <span class="c-flag">--image</span> <span class="c-str">Ubuntu2204</span> \
+  <span class="c-flag">--size</span> <span class="c-str">Standard_B2s</span> \
+  <span class="c-flag">--admin-username</span> azureuser \
+  <span class="c-flag">--generate-ssh-keys</span></code></pre>
+    </div>
+
+    <p data-i18n="a.p_connect">That's it. In about a minute Azure returns the VM's public IP address, and you can connect:</p>
+    <div class="code">
+      <div class="bar"><span class="lang">bash</span>
+        <button class="copy" data-copy><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy</button></div>
+      <pre><code><span class="c-cmd">ssh</span> azureuser@<span class="c-str">&lt;public-ip&gt;</span></code></pre>
+    </div>
+
+    <h2 id="tips" data-i18n="a.h_tips">Beginner tips that save real money</h2>
+    <ol>
+      <li data-i18n-html="a.tip1"><strong>Use B-series for learning.</strong> They're cheap, burstable, and perfect for experiments.</li>
+      <li data-i18n-html="a.tip2"><strong>Deallocate when idle.</strong> Set an auto-shutdown schedule in the VM's settings.</li>
+      <li data-i18n-html="a.tip3"><strong>Tag everything.</strong> Tags make it easy to find and clean up resources later.</li>
+      <li data-i18n-html="a.tip4"><strong>Delete the whole resource group</strong> when a lab is done — it removes the VM, disk, NIC and IP in one action.</li>
+    </ol>
+
+    <div class="callout">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.2 1 2h6c0-.8.3-1.3 1-2A6 6 0 0 0 12 3Z"/></svg></span>
+      <p data-i18n-html="a.callout_next"><b>Next step:</b> a VM alone isn't very useful until it's connected and protected. Continue with Virtual Networks and Network Security Groups to make yours reachable and safe.</p>
+    </div>
+
+    <!-- NEXT UP -->
+    <div class="next-up">
+      <span class="label" data-i18n="a.nextlabel">Continue the learning path</span>
+      <a class="next-card" href="index.html#hub">
+        <div>
+          <h4 data-i18n="a.nexth">Virtual Network (VNet)</h4>
+          <p data-i18n="a.nextp">The foundation of all Azure networking — subnets, peering and private connectivity.</p>
+        </div>
+        <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;margin-top:0;padding-top:0;">
+      <span data-i18n-html="footer.copy">© <span id="year">2026</span> Alexandre Capita. Built as a personal Azure knowledge hub.</span>
+      <a href="index.html" style="color:var(--teal);text-decoration:none;font-family:var(--font-mono);font-size:13px;" data-i18n="footer.back">← Back to all topics</a>
+    </div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+  // Reading progress
+  const prog = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    prog.style.width = Math.max(0, Math.min(1, pct)) * 100 + '%';
+  };
+  document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Copy buttons
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.closest('.code').querySelector('code').innerText;
+      navigator.clipboard?.writeText(code);
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied';
+      setTimeout(() => btn.innerHTML = orig, 1600);
+    });
+  });
+
+  // TOC active state
+  const links = [...document.querySelectorAll('.toc a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const tio = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        const id = '#' + en.target.id;
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => s && tio.observe(s));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script src="tweaks.js"></script>
+</body>
+</html>
