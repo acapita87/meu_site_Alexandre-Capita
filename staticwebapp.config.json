@@ -1,12 +1,6 @@
 {
-  "navigationFallback": {
-    "rewrite": "/index.html",
-    "exclude": ["/*.css", "/*.js", "/*.png", "/*.jpg", "/*.svg", "/*.html"]
-  },
-  "mimeTypes": {
-    ".json": "application/json"
-  },
-  "globalHeaders": {
-    "cache-control": "public, max-age=3600"
-  }
+  "routes": [
+    { "route": "/", "rewrite": "/index.html" },
+    { "route": "/article", "rewrite": "/article.html" }
+  ]
 }
