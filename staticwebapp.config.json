@@ -1,6 +1,14 @@
 {
   "routes": [
-    { "route": "/", "rewrite": "/index.html" },
-    { "route": "/article", "rewrite": "/article.html" }
-  ]
+    { "route": "/", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/article.html", "serve": "/article.html" },
+    { "route": "/article", "serve": "/article.html", "statusCode": 200 },
+    { "route": "/*.css", "serve": "/*.css", "statusCode": 200 },
+    { "route": "/*.js", "serve": "/*.js", "statusCode": 200 },
+    { "route": "/*.woff2", "serve": "/*.woff2", "statusCode": 200 },
+    { "route": "/*", "serve": "/index.html", "statusCode": 200 }
+  ],
+  "globalHeaders": {
+    "cache-control": "public, max-age=3600"
+  }
 }
