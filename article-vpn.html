@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPN & ExpressRoute — a guide · Alexandre Capita</title>
+<meta name="description" content="Connect on-premises networks to Azure securely over the internet or a private circuit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="article.css">
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="bg-fx" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+</div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#04122e" stroke-width="2"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16 9.2 3.5 3.5 0 0 1 17 18H7Z"/></svg></span>
+      <span class="name">Alexandre Capita<small>Azure · Cloud Notes</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#hub">Topics</a>
+      <a href="index.html#path">Learning path</a>
+      <a href="index.html#about">About</a>
+    </nav>
+    <a class="nav-cta" href="index.html#hub">Browse topics</a>
+  </div>
+</header>
+
+<!-- ARTICLE HERO -->
+<section class="article-hero">
+  <div class="wrap">
+    <div class="crumbs">
+      <a href="index.html">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <a href="index.html#hub">Networking</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <span>VPN & ExpressRoute</span>
+    </div>
+    <div class="article-badges">
+      <span class="tag cat">Networking</span>
+      <span class="tag">11 min read</span>
+      <span class="level beginner"><span class="bars"><i></i><i></i><i></i></span>Beginner</span>
+    </div>
+    <h1>VPN & ExpressRoute, explained from scratch</h1>
+    <p class="standfirst">Connect on-premises networks to Azure securely over the internet or a private circuit.</p>
+    <div class="byline">
+      <div class="avatar">AC</div>
+      <div class="who"><b>Alexandre Capita</b><span>Updated July 2026 · Azure IaaS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<div class="wrap article-layout">
+  <!-- TOC -->
+  <aside class="toc">
+    <h6>On this page</h6>
+    <ul>
+      <li><a href="#s2s" class="active">Site-to-Site VPN</a></li><li><a href="#p2s" class="active">Point-to-Site VPN</a></li><li><a href="#expressroute" class="active">ExpressRoute</a></li><li><a href="#architecture" class="active">VPN Gateway Architecture</a></li><li><a href="#start" class="active">Getting Started</a></li>
+    </ul>
+  </aside>
+
+  <!-- PROSE -->
+  <article class="prose">
+    
+    <h2 id="s2s">Site-to-Site VPN</h2>
+    <p>A <strong>Site-to-Site VPN</strong> encrypts traffic over the public internet, linking your office network to your Azure VNet. You install a VPN device at your office (or use Azure VPN Gateway on both ends), and they establish a secure tunnel. Traffic between your office and Azure is encrypted; anyone sniffing the internet sees garbage.</p>
+  
+    <h2 id="p2s">Point-to-Site VPN</h2>
+    <p><strong>Point-to-Site</strong> is for individual users working from home. Install a VPN client on your laptop; it connects to Azure VPN Gateway. Your laptop gets an IP in the VNet and can access resources as if you were in the office. Perfect for remote workers or developers needing secure access.</p>
+  
+    <h2 id="expressroute">ExpressRoute</h2>
+    <p><strong>ExpressRoute</strong> is a <strong>private circuit</strong> from your datacenter to Azure, leased from a carrier (not over the public internet). Advantages: <strong>higher bandwidth</strong> (up to 100 Gbps), <strong>lower latency</strong>, <strong>no internet congestion</strong>, and Microsoft doesn't see your traffic. Downside: expensive, requires a carrier relationship. Best for large enterprises with strict compliance needs.</p>
+  
+    <h2 id="architecture">VPN Gateway Architecture</h2>
+    <p>In Azure, you create a <strong>VPN Gateway</strong> (sits in a special subnet in your VNet). It handles all encryption/decryption and routing. Configure connections to your on-prem VPN device or ExpressRoute circuit. The gateway continuously pings your remote endpoint to ensure the tunnel stays up. If it fails, it can failover to a standby gateway.</p>
+  
+    <h2 id="start">Getting Started</h2>
+    <p>For <strong>Site-to-Site</strong>: Create a VPN Gateway (choose SKU based on throughput). Configure a Local Network Gateway pointing to your office router. Define a connection linking the two. For <strong>Point-to-Site</strong>: same gateway, but add VPN clients and download a client package. For <strong>ExpressRoute</strong>: contact a carrier, request a circuit, link it to your VNet via ExpressRoute Gateway. Allow weeks for setup.</p>
+  
+
+    <!-- NEXT UP -->
+    <div class="next-up">
+      <span class="label">Continue the learning path</span>
+      <a class="next-card" href="index.html#hub">
+        <div>
+          <h4>Browse all topics</h4>
+          <p>Explore the full Azure IaaS knowledge hub and continue your learning journey.</p>
+        </div>
+        <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;margin-top:0;padding-top:0;">
+      <span>© <span id="year">2026</span> Alexandre Capita. Built as a personal Azure knowledge hub.</span>
+      <a href="index.html" style="color:var(--teal);text-decoration:none;font-family:var(--font-mono);font-size:13px;">← Back to all topics</a>
+    </div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+  // Reading progress
+  const prog = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    prog.style.width = Math.max(0, Math.min(1, pct)) * 100 + '%';
+  };
+  document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Copy buttons
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.closest('.code').querySelector('code').innerText;
+      navigator.clipboard?.writeText(code);
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied';
+      setTimeout(() => btn.innerHTML = orig, 1600);
+    });
+  });
+
+  // TOC active state
+  const links = [...document.querySelectorAll('.toc a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const tio = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        const id = '#' + en.target.id;
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => s && tio.observe(s));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script src="tweaks.js"></script>
+</body>
+</html>

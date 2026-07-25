@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resource Groups — a guide · Alexandre Capita</title>
+<meta name="description" content="Organize, deploy and govern related resources as a single logical unit with shared lifecycle.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="article.css">
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="bg-fx" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+</div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#04122e" stroke-width="2"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16 9.2 3.5 3.5 0 0 1 17 18H7Z"/></svg></span>
+      <span class="name">Alexandre Capita<small>Azure · Cloud Notes</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#hub">Topics</a>
+      <a href="index.html#path">Learning path</a>
+      <a href="index.html#about">About</a>
+    </nav>
+    <a class="nav-cta" href="index.html#hub">Browse topics</a>
+  </div>
+</header>
+
+<!-- ARTICLE HERO -->
+<section class="article-hero">
+  <div class="wrap">
+    <div class="crumbs">
+      <a href="index.html">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <a href="index.html#hub">Management</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <span>Resource Groups</span>
+    </div>
+    <div class="article-badges">
+      <span class="tag cat">Management</span>
+      <span class="tag">5 min read</span>
+      <span class="level beginner"><span class="bars"><i></i><i></i><i></i></span>Beginner</span>
+    </div>
+    <h1>Resource Groups, explained from scratch</h1>
+    <p class="standfirst">Organize, deploy and govern related resources as a single logical unit with shared lifecycle.</p>
+    <div class="byline">
+      <div class="avatar">AC</div>
+      <div class="who"><b>Alexandre Capita</b><span>Updated July 2026 · Azure IaaS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<div class="wrap article-layout">
+  <!-- TOC -->
+  <aside class="toc">
+    <h6>On this page</h6>
+    <ul>
+      <li><a href="#what" class="active">What is a Resource Group?</a></li><li><a href="#environments" class="active">Organizing by Environment</a></li><li><a href="#tags" class="active">Tags for Cost Control</a></li><li><a href="#limits" class="active">Resource Group Limits</a></li><li><a href="#start" class="active">Getting Started</a></li>
+    </ul>
+  </aside>
+
+  <!-- PROSE -->
+  <article class="prose">
+    
+    <h2 id="what">What is a Resource Group?</h2>
+    <p>A <strong>Resource Group (RG)</strong> is a container that holds related Azure resources — VMs, networks, disks, databases, whatever. All resources in an RG share a lifecycle: delete the group, everything in it disappears. RGs also define billing scope and access control boundary.</p>
+  
+    <h2 id="environments">Organizing by Environment</h2>
+    <p>A common pattern: separate RGs for dev, staging, and production.<br/><ul><li><code>rg-webapp-dev</code> — web app + database (dev)</li><li><code>rg-webapp-staging</code> — same resources (staging)</li><li><code>rg-webapp-prod</code> — production stack with HA, backups, monitoring</li></ul>This keeps environments isolated: deploying to staging doesn't risk production. You can have different access policies per RG.</p>
+  
+    <h2 id="tags">Tags for Cost Control</h2>
+    <p>Add tags to resources: <code>Environment: prod, Owner: team-a, CostCenter: 12345</code>. Azure groups costs by tag, so you can see exactly which team spent how much. Enable <code>tag inheritance</code> so new resources automatically get tags. Report by tag to charge departments accurately.</p>
+  
+    <h2 id="limits">Resource Group Limits</h2>
+    <p>Each RG can hold thousands of resources. A single RG for everything works, but is hard to manage. Best practice: group by application or service. Don't be afraid to create many RGs — there's no cost per RG, only per resource.</p>
+  
+    <h2 id="start">Getting Started</h2>
+    <p>Create a Resource Group: Portal → Resource groups → Create, or CLI: <code>az group create --name rg-myapp-prod --location westeurope</code>. Add resources to it by selecting the RG during creation. Use RGs as your first organizational boundary. Combine with tags for billing. Delete an entire environment with one command: <code>az group delete --name rg-myapp-dev</code>.</p>
+  
+
+    <!-- NEXT UP -->
+    <div class="next-up">
+      <span class="label">Continue the learning path</span>
+      <a class="next-card" href="index.html#hub">
+        <div>
+          <h4>Browse all topics</h4>
+          <p>Explore the full Azure IaaS knowledge hub and continue your learning journey.</p>
+        </div>
+        <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;margin-top:0;padding-top:0;">
+      <span>© <span id="year">2026</span> Alexandre Capita. Built as a personal Azure knowledge hub.</span>
+      <a href="index.html" style="color:var(--teal);text-decoration:none;font-family:var(--font-mono);font-size:13px;">← Back to all topics</a>
+    </div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+  // Reading progress
+  const prog = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    prog.style.width = Math.max(0, Math.min(1, pct)) * 100 + '%';
+  };
+  document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Copy buttons
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.closest('.code').querySelector('code').innerText;
+      navigator.clipboard?.writeText(code);
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied';
+      setTimeout(() => btn.innerHTML = orig, 1600);
+    });
+  });
+
+  // TOC active state
+  const links = [...document.querySelectorAll('.toc a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const tio = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        const id = '#' + en.target.id;
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => s && tio.observe(s));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script src="tweaks.js"></script>
+</body>
+</html>

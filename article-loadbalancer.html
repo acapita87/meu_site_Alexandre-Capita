@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure Load Balancer — a guide · Alexandre Capita</title>
+<meta name="description" content="Distribute traffic across healthy VMs at layer 4 for high availability and scale.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="article.css">
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="bg-fx" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+</div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#04122e" stroke-width="2"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16 9.2 3.5 3.5 0 0 1 17 18H7Z"/></svg></span>
+      <span class="name">Alexandre Capita<small>Azure · Cloud Notes</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#hub">Topics</a>
+      <a href="index.html#path">Learning path</a>
+      <a href="index.html#about">About</a>
+    </nav>
+    <a class="nav-cta" href="index.html#hub">Browse topics</a>
+  </div>
+</header>
+
+<!-- ARTICLE HERO -->
+<section class="article-hero">
+  <div class="wrap">
+    <div class="crumbs">
+      <a href="index.html">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <a href="index.html#hub">Networking</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <span>Azure Load Balancer</span>
+    </div>
+    <div class="article-badges">
+      <span class="tag cat">Networking</span>
+      <span class="tag">8 min read</span>
+      <span class="level beginner"><span class="bars"><i></i><i></i><i></i></span>Beginner</span>
+    </div>
+    <h1>Azure Load Balancer, explained from scratch</h1>
+    <p class="standfirst">Distribute traffic across healthy VMs at layer 4 for high availability and scale.</p>
+    <div class="byline">
+      <div class="avatar">AC</div>
+      <div class="who"><b>Alexandre Capita</b><span>Updated July 2026 · Azure IaaS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<div class="wrap article-layout">
+  <!-- TOC -->
+  <aside class="toc">
+    <h6>On this page</h6>
+    <ul>
+      <li><a href="#what" class="active">What is a Load Balancer?</a></li><li><a href="#pools" class="active">Frontend & Backend Pools</a></li><li><a href="#rules" class="active">Load Balancing Rules</a></li><li><a href="#health" class="active">Health Probes & Failover</a></li><li><a href="#start" class="active">Getting Started</a></li>
+    </ul>
+  </aside>
+
+  <!-- PROSE -->
+  <article class="prose">
+    
+    <h2 id="what">What is a Load Balancer?</h2>
+    <p>The <strong>Azure Load Balancer</strong> is a layer-4 (transport layer) device that sits in front of your VMs and distributes incoming traffic across them. When requests arrive, it spreads them based on rules: round-robin, least connections, or IP hash. This prevents any single VM from getting overloaded.</p>
+  
+    <h2 id="pools">Frontend & Backend Pools</h2>
+    <p>Every Load Balancer has:<br/><ul><li><strong>Frontend IP</strong> — the public or private address clients connect to.</li><li><strong>Backend pool</strong> — the group of VMs receiving traffic (usually 2–10 VMs).</li><li><strong>Health probes</strong> — checks if each VM is healthy; removes dead ones automatically.</li></ul>Traffic flows: Client → Frontend IP → Load Balancer → Health check → Backend pool.</p>
+  
+    <h2 id="rules">Load Balancing Rules</h2>
+    <p>A <strong>load balancing rule</strong> maps incoming traffic to backend VMs. Example:<br/><code>Frontend IP 203.0.113.1:80 → Backend pool VMs:8080</code><br/>This listens on port 80 (HTTP) and sends to backend VMs on port 8080. You can have multiple rules: one for HTTP, one for HTTPS, one for SSH. Each rule defines protocol (TCP/UDP), ports, and algorithm.</p>
+  
+    <h2 id="health">Health Probes & Failover</h2>
+    <p>The Load Balancer continuously pings backend VMs (HTTP GET, TCP port check) to ensure they're healthy. If a VM stops responding, it's <strong>automatically removed from the pool</strong> — traffic stops flowing to it. When it recovers, it's added back. This is automatic high availability: clients never see a dead VM.</p>
+  
+    <h2 id="start">Getting Started</h2>
+    <p>Create a Load Balancer: Portal → Load Balancers → Create. Choose public or private. Add a frontend IP and backend pool (select your VMs). Create a health probe (HTTP on port 80, path /health). Create a load balancing rule (port 80 → backend port 80). Deploy at least 2 VMs for redundancy. The LB's public IP becomes your app's endpoint.</p>
+  
+
+    <!-- NEXT UP -->
+    <div class="next-up">
+      <span class="label">Continue the learning path</span>
+      <a class="next-card" href="index.html#hub">
+        <div>
+          <h4>Browse all topics</h4>
+          <p>Explore the full Azure IaaS knowledge hub and continue your learning journey.</p>
+        </div>
+        <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;margin-top:0;padding-top:0;">
+      <span>© <span id="year">2026</span> Alexandre Capita. Built as a personal Azure knowledge hub.</span>
+      <a href="index.html" style="color:var(--teal);text-decoration:none;font-family:var(--font-mono);font-size:13px;">← Back to all topics</a>
+    </div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+  // Reading progress
+  const prog = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    prog.style.width = Math.max(0, Math.min(1, pct)) * 100 + '%';
+  };
+  document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Copy buttons
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.closest('.code').querySelector('code').innerText;
+      navigator.clipboard?.writeText(code);
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied';
+      setTimeout(() => btn.innerHTML = orig, 1600);
+    });
+  });
+
+  // TOC active state
+  const links = [...document.querySelectorAll('.toc a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const tio = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        const id = '#' + en.target.id;
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => s && tio.observe(s));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script src="tweaks.js"></script>
+</body>
+</html>

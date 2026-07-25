@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure Firewall — a guide · Alexandre Capita</title>
+<meta name="description" content="A managed, stateful network firewall with threat intelligence to protect your VNets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="article.css">
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="bg-fx" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+</div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#04122e" stroke-width="2"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16 9.2 3.5 3.5 0 0 1 17 18H7Z"/></svg></span>
+      <span class="name">Alexandre Capita<small>Azure · Cloud Notes</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#hub">Topics</a>
+      <a href="index.html#path">Learning path</a>
+      <a href="index.html#about">About</a>
+    </nav>
+    <a class="nav-cta" href="index.html#hub">Browse topics</a>
+  </div>
+</header>
+
+<!-- ARTICLE HERO -->
+<section class="article-hero">
+  <div class="wrap">
+    <div class="crumbs">
+      <a href="index.html">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <a href="index.html#hub">Security</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <span>Azure Firewall</span>
+    </div>
+    <div class="article-badges">
+      <span class="tag cat">Security</span>
+      <span class="tag">9 min read</span>
+      <span class="level beginner"><span class="bars"><i></i><i></i><i></i></span>Beginner</span>
+    </div>
+    <h1>Azure Firewall, explained from scratch</h1>
+    <p class="standfirst">A managed, stateful network firewall with threat intelligence to protect your VNets.</p>
+    <div class="byline">
+      <div class="avatar">AC</div>
+      <div class="who"><b>Alexandre Capita</b><span>Updated July 2026 · Azure IaaS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<div class="wrap article-layout">
+  <!-- TOC -->
+  <aside class="toc">
+    <h6>On this page</h6>
+    <ul>
+      <li><a href="#what" class="active">What is Azure Firewall?</a></li><li><a href="#rules" class="active">Network vs Application Rules</a></li><li><a href="#threat" class="active">Threat Intelligence & Logging</a></li><li><a href="#policies" class="active">Firewall Policies & Central Management</a></li><li><a href="#start" class="active">Getting Started</a></li>
+    </ul>
+  </aside>
+
+  <!-- PROSE -->
+  <article class="prose">
+    
+    <h2 id="what">What is Azure Firewall?</h2>
+    <p><strong>Azure Firewall</strong> is a managed, cloud-native firewall that sits between your VNet and the internet. Unlike NSGs (which are lightweight), Azure Firewall is a full-featured appliance: it inspects all traffic at layer 7, blocks malware, applies threat intelligence, and logs everything for audit.</p>
+  
+    <h2 id="rules">Network vs Application Rules</h2>
+    <p><strong>Network rules</strong> work at layers 3-4 (IP, TCP, UDP): allow/deny by source IP, destination IP, port, protocol. <strong>Application rules</strong> work at layer 7 (HTTP/HTTPS, DNS): inspect hostnames, URLs, and headers. Example: deny all outbound traffic except to microsoft.com and github.com. This is far more granular than a simple NSG.</p>
+  
+    <h2 id="threat">Threat Intelligence & Logging</h2>
+    <p>Azure Firewall has <strong>threat intelligence</strong> built-in: it knows about known malicious IPs, domains, and attack patterns. Enable it to auto-block known-bad traffic. All traffic decisions are logged to <strong>Azure Log Analytics</strong>: which connections succeeded, which were denied, why. Use these logs to tune rules and audit compliance.</p>
+  
+    <h2 id="policies">Firewall Policies & Central Management</h2>
+    <p>Create <strong>firewall policies</strong> and apply them to multiple firewalls across your organization. This centralized approach keeps rules consistent: one policy defines allowed traffic for all environments. Policies can be inherited and overridden at the VNet level — powerful for large deployments with multiple teams.</p>
+  
+    <h2 id="start">Getting Started</h2>
+    <p>Deploy Azure Firewall: Portal → Firewalls → Create. Place it in a hub VNet with subnets connected via peering. Configure inbound & outbound rules. Enable threat intelligence. Route traffic through the firewall: create route tables pointing to the firewall's IP. Monitor logs in Log Analytics. Start permissive (log everything), then tighten rules as you understand your traffic patterns.</p>
+  
+
+    <!-- NEXT UP -->
+    <div class="next-up">
+      <span class="label">Continue the learning path</span>
+      <a class="next-card" href="index.html#hub">
+        <div>
+          <h4>Browse all topics</h4>
+          <p>Explore the full Azure IaaS knowledge hub and continue your learning journey.</p>
+        </div>
+        <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;margin-top:0;padding-top:0;">
+      <span>© <span id="year">2026</span> Alexandre Capita. Built as a personal Azure knowledge hub.</span>
+      <a href="index.html" style="color:var(--teal);text-decoration:none;font-family:var(--font-mono);font-size:13px;">← Back to all topics</a>
+    </div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+  // Reading progress
+  const prog = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    prog.style.width = Math.max(0, Math.min(1, pct)) * 100 + '%';
+  };
+  document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Copy buttons
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.closest('.code').querySelector('code').innerText;
+      navigator.clipboard?.writeText(code);
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied';
+      setTimeout(() => btn.innerHTML = orig, 1600);
+    });
+  });
+
+  // TOC active state
+  const links = [...document.querySelectorAll('.toc a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const tio = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        const id = '#' + en.target.id;
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => s && tio.observe(s));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script src="tweaks.js"></script>
+</body>
+</html>

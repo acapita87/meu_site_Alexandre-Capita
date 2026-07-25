@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure Monitor — a guide · Alexandre Capita</title>
+<meta name="description" content="Collect metrics and logs, build dashboards and fire alerts to keep your stack healthy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="article.css">
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="bg-fx" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+</div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#04122e" stroke-width="2"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16 9.2 3.5 3.5 0 0 1 17 18H7Z"/></svg></span>
+      <span class="name">Alexandre Capita<small>Azure · Cloud Notes</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#hub">Topics</a>
+      <a href="index.html#path">Learning path</a>
+      <a href="index.html#about">About</a>
+    </nav>
+    <a class="nav-cta" href="index.html#hub">Browse topics</a>
+  </div>
+</header>
+
+<!-- ARTICLE HERO -->
+<section class="article-hero">
+  <div class="wrap">
+    <div class="crumbs">
+      <a href="index.html">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <a href="index.html#hub">Management</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <span>Azure Monitor</span>
+    </div>
+    <div class="article-badges">
+      <span class="tag cat">Management</span>
+      <span class="tag">8 min read</span>
+      <span class="level beginner"><span class="bars"><i></i><i></i><i></i></span>Beginner</span>
+    </div>
+    <h1>Azure Monitor, explained from scratch</h1>
+    <p class="standfirst">Collect metrics and logs, build dashboards and fire alerts to keep your stack healthy.</p>
+    <div class="byline">
+      <div class="avatar">AC</div>
+      <div class="who"><b>Alexandre Capita</b><span>Updated July 2026 · Azure IaaS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<div class="wrap article-layout">
+  <!-- TOC -->
+  <aside class="toc">
+    <h6>On this page</h6>
+    <ul>
+      <li><a href="#what" class="active">What is Azure Monitor?</a></li><li><a href="#metrics" class="active">Metrics vs Logs</a></li><li><a href="#logs" class="active">Log Analytics Workspace</a></li><li><a href="#alerts" class="active">Alerts & Action Groups</a></li><li><a href="#dashboards" class="active">Dashboards & Insights</a></li><li><a href="#start" class="active">Getting Started</a></li>
+    </ul>
+  </aside>
+
+  <!-- PROSE -->
+  <article class="prose">
+    
+    <h2 id="what">What is Azure Monitor?</h2>
+    <p><strong>Azure Monitor</strong> is the observability service for Azure. It collects <strong>metrics</strong> (CPU, memory, disk) from all resources, stores application <strong>logs</strong>, and aggregates data from third-party tools. Use it to understand what's happening in your stack, troubleshoot problems, and catch issues before they escalate.</p>
+  
+    <h2 id="metrics">Metrics vs Logs</h2>
+    <p><strong>Metrics</strong> are numeric time-series data: CPU % over time, disk throughput, request count. Low cost, real-time. <strong>Logs</strong> are structured text: application output, error stacks, audit events. Higher storage cost, queryable after the fact. Use metrics for alerting (CPU > 80%?), logs for investigation (why did that job fail?).</p>
+  
+    <h2 id="logs">Log Analytics Workspace</h2>
+    <p>The <strong>Log Analytics Workspace</strong> is where logs live. Enable it, then resources send logs there. Query logs with <strong>KQL (Kusto Query Language)</strong>: <code>AzureDiagnostics | where ResourceType == 'VIRTUALNETWORKS' | summarize count() by TimeGenerated</code>. Extremely powerful for digging into problems. First 5 GB/month free, then charged per GB.</p>
+  
+    <h2 id="alerts">Alerts & Action Groups</h2>
+    <p>Create <strong>alert rules</strong> that fire when metrics cross thresholds. Example: "CPU > 80% for 5 minutes → send email + create incident". Alerts route to <strong>Action Groups</strong> which handle notification (email, SMS, webhook). Integrate with incident management systems (ServiceNow, Jira) so alerts trigger automated workflows.</p>
+  
+    <h2 id="dashboards">Dashboards & Insights</h2>
+    <p>Build custom dashboards pinning charts: VM performance, app latency, error rates. <strong>Insights</strong> are curated dashboards for specific resource types (VMs, App Service, SQL). They show health at a glance and link to detailed logs for troubleshooting. Most teams start with Insights, then customize.</p>
+  
+    <h2 id="start">Getting Started</h2>
+    <p>Enable Monitor: resources automatically send metrics. Create Log Analytics Workspace for logs. Enable diagnostic settings on each resource (VMs, Load Balancers) to send logs to it. Create a simple alert: CPU > 80% → email. Build a dashboard with VM memory and disk charts. Query logs: Portal → Log Analytics → run KQL queries. Spend time in Insights to understand what's normal for your workload.</p>
+  
+
+    <!-- NEXT UP -->
+    <div class="next-up">
+      <span class="label">Continue the learning path</span>
+      <a class="next-card" href="index.html#hub">
+        <div>
+          <h4>Browse all topics</h4>
+          <p>Explore the full Azure IaaS knowledge hub and continue your learning journey.</p>
+        </div>
+        <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;margin-top:0;padding-top:0;">
+      <span>© <span id="year">2026</span> Alexandre Capita. Built as a personal Azure knowledge hub.</span>
+      <a href="index.html" style="color:var(--teal);text-decoration:none;font-family:var(--font-mono);font-size:13px;">← Back to all topics</a>
+    </div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+  // Reading progress
+  const prog = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    prog.style.width = Math.max(0, Math.min(1, pct)) * 100 + '%';
+  };
+  document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Copy buttons
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.closest('.code').querySelector('code').innerText;
+      navigator.clipboard?.writeText(code);
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied';
+      setTimeout(() => btn.innerHTML = orig, 1600);
+    });
+  });
+
+  // TOC active state
+  const links = [...document.querySelectorAll('.toc a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const tio = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        const id = '#' + en.target.id;
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => s && tio.observe(s));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script src="tweaks.js"></script>
+</body>
+</html>

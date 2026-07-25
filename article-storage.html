@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blob & Disk Storage — a guide · Alexandre Capita</title>
+<meta name="description" content="Store unstructured data and VM disks. Learn access tiers, redundancy and lifecycle rules.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="article.css">
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="bg-fx" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+</div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#04122e" stroke-width="2"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16 9.2 3.5 3.5 0 0 1 17 18H7Z"/></svg></span>
+      <span class="name">Alexandre Capita<small>Azure · Cloud Notes</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#hub">Topics</a>
+      <a href="index.html#path">Learning path</a>
+      <a href="index.html#about">About</a>
+    </nav>
+    <a class="nav-cta" href="index.html#hub">Browse topics</a>
+  </div>
+</header>
+
+<!-- ARTICLE HERO -->
+<section class="article-hero">
+  <div class="wrap">
+    <div class="crumbs">
+      <a href="index.html">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <a href="index.html#hub">Storage</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <span>Blob & Disk Storage</span>
+    </div>
+    <div class="article-badges">
+      <span class="tag cat">Storage</span>
+      <span class="tag">8 min read</span>
+      <span class="level beginner"><span class="bars"><i></i><i></i><i></i></span>Beginner</span>
+    </div>
+    <h1>Blob & Disk Storage, explained from scratch</h1>
+    <p class="standfirst">Store unstructured data and VM disks. Learn access tiers, redundancy and lifecycle rules.</p>
+    <div class="byline">
+      <div class="avatar">AC</div>
+      <div class="who"><b>Alexandre Capita</b><span>Updated July 2026 · Azure IaaS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<div class="wrap article-layout">
+  <!-- TOC -->
+  <aside class="toc">
+    <h6>On this page</h6>
+    <ul>
+      <li><a href="#what" class="active">What is Blob Storage?</a></li><li><a href="#tiers" class="active">Access Tiers</a></li><li><a href="#redundancy" class="active">Redundancy & Replication</a></li><li><a href="#lifecycle" class="active">Lifecycle Management</a></li><li><a href="#start" class="active">Getting Started</a></li>
+    </ul>
+  </aside>
+
+  <!-- PROSE -->
+  <article class="prose">
+    
+    <h2 id="what">What is Blob Storage?</h2>
+    <p><strong>Blob Storage</strong> is for unstructured data: documents, images, videos, logs, backups. Unlike a database, it doesn't care about structure — just store bytes. You organize blobs into <strong>containers</strong> (like folders). Access via REST API, Azure SDK, or direct HTTP. Extremely scalable: petabytes of data for pennies per month.</p>
+  
+    <h2 id="tiers">Access Tiers</h2>
+    <p><ul><li><strong>Hot</strong> — for frequently accessed data (websites, APIs). Higher storage cost, lower access cost.</li><li><strong>Cool</strong> — accessed infrequently (archives, long-term backups). Lower storage cost, higher retrieval cost.</li><li><strong>Archive</strong> — rarely accessed (compliance archives, long-term retention). Cheapest storage, slowest retrieval (hours), can't access until "rehydrated".</li></ul>Move data between tiers as usage changes — a common pattern: store hot, then move to cool, then archive.</p>
+  
+    <h2 id="redundancy">Redundancy & Replication</h2>
+    <p>Choose redundancy for durability:<br/><ul><li><strong>LRS</strong> (Local Redundant Storage) — 3 copies in one datacenter. Cheapest, fastest; survives disk failure.</li><li><strong>GRS</strong> (Geo-Redundant Storage) — copies in two regions. Survives entire region failure.</li><li><strong>ZRS</strong> (Zone-Redundant Storage) — copies across zones in one region. Survives zone failure.</li></ul>Higher redundancy = more cost. Choose based on RTO/RPO needs.</p>
+  
+    <h2 id="lifecycle">Lifecycle Management</h2>
+    <p>Automatically move blobs between tiers or delete them based on rules. Example: <strong>after 30 days, move from hot to cool; after 90 days, move to archive; after 7 years, delete</strong>. Lifecycle policies run daily at UTC midnight. Perfect for cost optimization: keep hot data hot for speed, age it out automatically.</p>
+  
+    <h2 id="start">Getting Started</h2>
+    <p>Create a Storage Account: Portal → Storage accounts → Create. Choose redundancy (LRS for dev, GRS for production). Create a container. Upload blobs via Portal, CLI, or SDK. Set access tier. Add a lifecycle policy: Portal → Storage account → Lifecycle management → Add rule. Monitor costs in Cost Management. Use SAS tokens or Managed Identity for apps to access blobs securely.</p>
+  
+
+    <!-- NEXT UP -->
+    <div class="next-up">
+      <span class="label">Continue the learning path</span>
+      <a class="next-card" href="index.html#hub">
+        <div>
+          <h4>Browse all topics</h4>
+          <p>Explore the full Azure IaaS knowledge hub and continue your learning journey.</p>
+        </div>
+        <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;margin-top:0;padding-top:0;">
+      <span>© <span id="year">2026</span> Alexandre Capita. Built as a personal Azure knowledge hub.</span>
+      <a href="index.html" style="color:var(--teal);text-decoration:none;font-family:var(--font-mono);font-size:13px;">← Back to all topics</a>
+    </div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+  // Reading progress
+  const prog = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    prog.style.width = Math.max(0, Math.min(1, pct)) * 100 + '%';
+  };
+  document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Copy buttons
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.closest('.code').querySelector('code').innerText;
+      navigator.clipboard?.writeText(code);
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied';
+      setTimeout(() => btn.innerHTML = orig, 1600);
+    });
+  });
+
+  // TOC active state
+  const links = [...document.querySelectorAll('.toc a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const tio = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        const id = '#' + en.target.id;
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => s && tio.observe(s));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script src="tweaks.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VM Scale Sets — a guide · Alexandre Capita</title>
+<meta name="description" content="Run and auto-scale identical VMs behind a load balancer to handle traffic spikes automatically.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="article.css">
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="bg-fx" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+</div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#04122e" stroke-width="2"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16 9.2 3.5 3.5 0 0 1 17 18H7Z"/></svg></span>
+      <span class="name">Alexandre Capita<small>Azure · Cloud Notes</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#hub">Topics</a>
+      <a href="index.html#path">Learning path</a>
+      <a href="index.html#about">About</a>
+    </nav>
+    <a class="nav-cta" href="index.html#hub">Browse topics</a>
+  </div>
+</header>
+
+<!-- ARTICLE HERO -->
+<section class="article-hero">
+  <div class="wrap">
+    <div class="crumbs">
+      <a href="index.html">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <a href="index.html#hub">Compute</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      <span>VM Scale Sets</span>
+    </div>
+    <div class="article-badges">
+      <span class="tag cat">Compute</span>
+      <span class="tag">8 min read</span>
+      <span class="level beginner"><span class="bars"><i></i><i></i><i></i></span>Beginner</span>
+    </div>
+    <h1>VM Scale Sets, explained from scratch</h1>
+    <p class="standfirst">Run and auto-scale identical VMs behind a load balancer to handle traffic spikes automatically.</p>
+    <div class="byline">
+      <div class="avatar">AC</div>
+      <div class="who"><b>Alexandre Capita</b><span>Updated July 2026 · Azure IaaS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<div class="wrap article-layout">
+  <!-- TOC -->
+  <aside class="toc">
+    <h6>On this page</h6>
+    <ul>
+      <li><a href="#what" class="active">What is a VM Scale Set?</a></li><li><a href="#autoscale" class="active">How Autoscaling Works</a></li><li><a href="#concepts" class="active">Key Concepts</a></li><li><a href="#start" class="active">Getting Started</a></li><li><a href="#best" class="active">Best Practices</a></li>
+    </ul>
+  </aside>
+
+  <!-- PROSE -->
+  <article class="prose">
+    
+    <h2 id="what">What is a VM Scale Set?</h2>
+    <p>A <strong>VM Scale Set (VMSS)</strong> is a group of identical, auto-scaling VMs that can grow or shrink automatically based on demand. Instead of managing each VM individually, you define a template once, and Azure handles creating, updating, and removing VMs as traffic changes.</p>
+  
+    <h2 id="autoscale">How Autoscaling Works</h2>
+    <p>Scale Sets use <strong>autoscaling rules</strong> connected to Azure Monitor metrics. You set a target: if CPU goes above 70%, scale up; if it drops below 20%, scale down. Azure continuously watches and adjusts the instance count in seconds, keeping your app responsive without manual intervention.</p>
+  
+    <h2 id="concepts">Key Concepts</h2>
+    <p><ul><li><strong>Instance template</strong> — defines the VM configuration (OS, size, disks, network).</li><li><strong>Scaling rules</strong> — trigger scale-up/down based on metrics or schedules.</li><li><strong>Health probes</strong> — remove unhealthy VMs and replace them automatically.</li><li><strong>Load balancer integration</strong> — traffic flows through Azure Load Balancer to spread load.</li></ul></p>
+  
+    <h2 id="start">Getting Started</h2>
+    <p>Create a Scale Set from the Portal: choose an image, define min/max instance count, select an autoscale rule. For CLI: <code>az vmss create --resource-group myRG --name myScaleSet --image UbuntuLTS --capacity 2</code>. After creation, add autoscaling: <code>az monitor autoscale create --resource-group myRG --resource myScaleSet --resource-type "Microsoft.Compute/virtualMachineScaleSets"</code>.</p>
+  
+    <h2 id="best">Best Practices</h2>
+    <p><ol><li><strong>Use health probes</strong> — so Azure removes broken instances fast.</li><li><strong>Test autoscale rules</strong> — load-test to verify they trigger correctly.</li><li><strong>Monitor costs</strong> — autoscaling can spin up many VMs; set hard max limits.</li><li><strong>Keep templates clean</strong> — use images, not custom scripts, for faster scale-up.</li></ol></p>
+  
+
+    <!-- NEXT UP -->
+    <div class="next-up">
+      <span class="label">Continue the learning path</span>
+      <a class="next-card" href="index.html#hub">
+        <div>
+          <h4>Browse all topics</h4>
+          <p>Explore the full Azure IaaS knowledge hub and continue your learning journey.</p>
+        </div>
+        <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;margin-top:0;padding-top:0;">
+      <span>© <span id="year">2026</span> Alexandre Capita. Built as a personal Azure knowledge hub.</span>
+      <a href="index.html" style="color:var(--teal);text-decoration:none;font-family:var(--font-mono);font-size:13px;">← Back to all topics</a>
+    </div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+  // Reading progress
+  const prog = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    prog.style.width = Math.max(0, Math.min(1, pct)) * 100 + '%';
+  };
+  document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Copy buttons
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.closest('.code').querySelector('code').innerText;
+      navigator.clipboard?.writeText(code);
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied';
+      setTimeout(() => btn.innerHTML = orig, 1600);
+    });
+  });
+
+  // TOC active state
+  const links = [...document.querySelectorAll('.toc a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const tio = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        const id = '#' + en.target.id;
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => s && tio.observe(s));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script src="tweaks.js"></script>
+</body>
+</html>
